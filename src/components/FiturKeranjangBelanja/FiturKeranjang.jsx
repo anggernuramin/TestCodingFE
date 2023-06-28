@@ -106,22 +106,17 @@ export const FiturKeranjang = () => {
       <h1 className="text-2xl text-red-600  mb-5 mt-10">4. Membuat fitur keranjang dan total belanja dengan data yang dinamis</h1>
       <div className="flex gap-3">
         <div className="w-[65%] flex flex-wrap gap-10 items-center justify-center">
-          <CardProduct />
           {producks.map((item) => {
             return (
-              <div className="card w-[350px] h-[470px] bg-slate-100 text-slate-950 text-base font-semibold shadow-xl" key={item.id}>
-                <CardProduct />
+              <CardProduct key={item.id}>
+                <CardProduct.CardImage srcImage={item.image} />
                 <div className="card-body">
-                  <h2 className="card-title font-bold">{item.title}</h2>
-                  <p>{item.deskription}</p>
-                  <div className="card-actions flex justify-between items-center">
-                    <h4>Rp {item.price.toLocaleString("id-ID", { styles: "currency", currency: "IDR" })}</h4>
-                    <button className="btn btn-primary" onClick={() => handleAddToCard(item.id)}>
-                      Add To Card
-                    </button>
-                  </div>
+                  <CardProduct.CardBody title={item.title} description={item.deskription} />
+
+                  {/* kirim function handleAddToCard,dan id untuk parameter melalui props */}
+                  <CardProduct.CardFooter id={item.id} price={item.price} handleAddToCard={handleAddToCard} />
                 </div>
-              </div>
+              </CardProduct>
             );
           })}
         </div>
@@ -158,7 +153,7 @@ export const FiturKeranjang = () => {
                     </tr>
                   );
                 })}
-                {/* Menampilkan total belanja, dengan menghitung qty * price */}
+                {/* Menampilkan total belanja, dengan menghitung qty * price ,dalam baris baru*/}
                 {totalPrice === 0 ? (
                   <tr>
                     <td colSpan={4}>
